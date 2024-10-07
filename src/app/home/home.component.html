@@ -1,0 +1,51 @@
+<div class="container">
+  <header class="jumbotron">
+
+    
+    <div>
+      <label for="pageSize">Items per page:</label>
+      <select id="pageSize" [(ngModel)]="pageSize" (change)="currentPage = 0">
+        <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+    <button class="excelButton" (click)="exportToExcel()">Export to Excel</button>
+    <div style="margin-left: 450px;">
+    Upload Excel File
+      <!-- File input for Excel -->
+      <input type="file" (change)="onFileSelected($event)" accept=".xlsx, .xls" />
+    
+      <!-- Upload Button -->
+      <button (click)="onUpload()">Upload File</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let column of displayedColumns">{{ column | titlecase }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of paginatedData">
+          <td>{{ student.studentId }}</td>
+          <td>{{ student.firstName }}</td>
+          <td>{{ student.lastName }}</td>
+          <td>{{ student.dob | date }}</td>
+          <td>{{ student.className || 'N/A' }}</td>
+          <td>{{ student.score }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="pagination">
+      <button (click)="currentPage = 0" [disabled]="currentPage === 0">First</button>
+      <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 0">Previous</button>
+      <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+      <button (click)="currentPage = currentPage + 1" [disabled]="currentPage >= totalPages - 1">Next</button>
+      <button (click)="currentPage = totalPages - 1" [disabled]="currentPage >= totalPages - 1">Last</button>
+    </div>
+    
+    
+    
+    
+    
+  </header>
+</div>
